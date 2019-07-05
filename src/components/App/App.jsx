@@ -121,7 +121,7 @@ const App = () => {
         <button onClick={getCityCode}>SEARCH</button> <br />
       </div>
       {loading ? (
-        "LOADING"
+        <div className="loading">LOADING</div>
       ) : (
         <>
           <Flight flights={flights} activePage={activePage} jump={jump} />
