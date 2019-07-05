@@ -84,29 +84,34 @@ const App = () => {
   };
   const handleTypingFrom = e => {
     setTextInputFrom(e.target.value);
-    console.log(e.target.value);
+    // console.log(e.target.value);
   };
   const handleTypingTo = e => {
     setTextInputTo(e.target.value);
-    console.log(e.target.value);
+    // console.log(e.target.value);
   };
-  const getCityCode = async () => {
-    await fetch(
-      `https://api.skypicker.com/locations?term=${textInputFrom}&limit=1`
-    )
+  const getCityCode = () => {
+    fetch(`https://api.skypicker.com/locations?term=${textInputFrom}&limit=1`)
       .then(resp => resp.json())
       .then(cityCodeFrom => cityCodeFrom.locations[0].code)
-      .then(setFrom);
+      .then(data => {
+        console.log("input From");
+        setFrom(data);
+      });
 
-    await fetch(
-      `https://api.skypicker.com/locations?term=${textInputTo}&limit=1`
-    )
+    fetch(`https://api.skypicker.com/locations?term=${textInputTo}&limit=1`)
       .then(resp => resp.json())
       .then(cityCodeTo => cityCodeTo.locations[0].code)
-      .then(setTo)
-
-      .then(getFlight());
+      .then(data => {
+        console.log("input to");
+        setTo(data);
+      });
+    console.log("getting fligh");
   };
+  useEffect(() => {
+    getFlight();
+  }, [from, to]);
+
   return (
     <>
       <select name="fromList" onChange={handleFrom}>
