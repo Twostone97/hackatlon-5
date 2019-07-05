@@ -28,6 +28,8 @@
   "dependencies": {
     "luxon": "^1.16.1",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react-dom": "^16.8.6",
+    "react-js-pagination": "^3.0.2",
+    "react-paginate": "^6.3.0"
   }
 }

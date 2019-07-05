@@ -1,8 +1,8 @@
 import React from "react";
 
-const Flight = ({ flights }) => (
+const Flight = ({ flights, activePage }) => (
   <>
-    {flights.map((flight, index) => (
+    {[...flights].slice(activePage, activePage + 5).map((flight, index) => (
       <div className="flight" key={`flight-${index}`}>
         <div className="dTime">Departure: {flight.departureTime}</div>
         <div className="aTime">Arrival: {flight.arrivalTime}</div>
