@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Pagination from "react-js-pagination";
 import Flight from "../Flight/Flight.jsx";
 
 const App = () => {
@@ -47,10 +46,6 @@ const App = () => {
       })
       .catch(console.log);
   };
-
-  // useEffect(() => {
-  //   getFlight();
-  // }, []);
 
   const handleFrom = e => {
     setFrom(fromList[e.target.value]);
@@ -111,7 +106,7 @@ const App = () => {
 
   return (
     <>
-      <select name="fromList" onChange={handleFrom}>
+      {/* <select name="fromList" onChange={handleFrom}>
         {Object.keys(fromList).map((item, index) => (
           <option key={`fromOption-${index}`}>{item}</option>
         ))}
@@ -120,18 +115,24 @@ const App = () => {
         {Object.keys(toList).map((item, index) => (
           <option key={`toOption-${index}`}>{item}</option>
         ))}
-      </select>
-      <input type="text" onChange={handleTypingFrom} />
-      <input type="text" onChange={handleTypingTo} />
-      <input type="checkbox" onChange={handleDirect} />
-      <button onClick={getCityCode}>SEARCH</button> <br />
+      </select> */}
+      <div className="inputs">
+        <label htmlFor="text">From:</label>
+        <input type="text" onChange={handleTypingFrom} />
+        <label htmlFor="text">To:</label>
+        <input type="text" onChange={handleTypingTo} />
+        <input type="checkbox" onChange={handleDirect} />
+        <button onClick={getCityCode}>SEARCH</button> <br />
+      </div>
       {loading ? (
         "LOADING"
       ) : (
         <>
           <Flight flights={flights} activePage={activePage} />
-          <button onClick={handlePageChangedown}>-</button>
-          <button onClick={handlePageChangeup}>+</button>
+          <div className="pages">
+            <button onClick={handlePageChangedown}>◄</button>
+            <button onClick={handlePageChangeup}>►</button>
+          </div>
         </>
       )}
     </>
