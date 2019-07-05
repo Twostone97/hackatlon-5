@@ -4,23 +4,23 @@ import Flight from "../Flight/Flight.jsx";
 
 const App = () => {
   const [flights, setflights] = useState([]);
-  const [from, setFrom] = useState("PRG");
-  const [to, setTo] = useState("LON");
+  const [from, setFrom] = useState("VAL");
+  const [to, setTo] = useState("PRG");
 
-  const [fromList, setFromList] = useState({
-    Valencia: VAL,
-    Barcelona: BAR,
-    Madrid: MAD,
-    Milano: MIL,
-    Athens: ATH
-  });
+  const fromList = {
+    Valencia: "VAL",
+    Barcelona: "BAR",
+    Madrid: "MAD",
+    Milano: "MIL",
+    Athens: "ATH"
+  };
 
-  const [toList, setToList] = useState({
-    Prague: PRG,
-    Berlin: BER,
-    Warsaw: WAW,
-    Pardubice: PED
-  });
+  const toList = {
+    Prague: "PRG",
+    Berlin: "BER",
+    Warsaw: "WAW",
+    Pardubice: "PED"
+  };
 
   const getFlight = () => {
     fetch(
@@ -49,22 +49,27 @@ const App = () => {
   }
 
   const handleFrom = e => {
-    setFrom(e.target.value);
+    // setFrom(e.target.value);
+    setFrom(fromList[e.target.value]);
   };
 
   const handleTo = e => {
-    setTo(e.target.value);
+    setTo(toList[[e.target.value]]);
   };
 
   return (
     <>
-      <input
-        type="text"
-        onChange={handleFrom}
-        placeholder="From"
-        value={from}
-      />
-      <input type="text" onChange={handleTo} placeholder="To" value={to} />
+      <select name="fromList" onChange={handleFrom}>
+        {Object.keys(fromList).map((item, index) => (
+          <option key={`fromOption-${index}`}>{item}</option>
+        ))}
+      </select>
+
+      <select name="toList" onChange={handleTo}>
+        {Object.keys(toList).map((item, index) => (
+          <option key={`toOption-${index}`}>{item}</option>
+        ))}
+      </select>
 
       <button onClick={getFlight}>SEARCH</button>
       <Flight flights={flights} />
