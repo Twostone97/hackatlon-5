@@ -116,6 +116,7 @@ const App = () => {
         <input type="text" onChange={handleTypingFrom} />
         <label htmlFor="text">To:</label>
         <input type="text" onChange={handleTypingTo} />
+        <label htmlFor="checkbox">Dirrec Flight:</label>
         <input type="checkbox" onChange={handleDirect} />
         <button onClick={getCityCode}>SEARCH</button> <br />
       </div>
