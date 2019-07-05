@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Flight from "../Flight/Flight.jsx";
+import { DateTime } from "luxon";
 
 const App = () => {
   const [flights, setflights] = useState([]);
@@ -35,8 +36,12 @@ const App = () => {
       .then(resp => resp.json())
       .then(({ data }) => {
         const detailsOfFlight = data.map((flight, index) => ({
-          departureTime: flight.dTime,
-          arrivalTime: flight.aTime,
+          departureTime: DateTime.fromMillis(flight.dTime * 1000).toFormat(
+            "hh:mm"
+          ),
+          arrivalTime: DateTime.fromMillis(flight.aTime * 1000).toFormat(
+            "hh:mm"
+          ),
           from: flight.cityFrom,
           to: flight.cityTo,
           price: flight.price,
@@ -121,7 +126,7 @@ const App = () => {
         <button onClick={getCityCode}>SEARCH</button> <br />
       </div>
       {loading ? (
-        "LOADING"
+        <div className="loading">LOADING</div>
       ) : (
         <>
           <Flight flights={flights} activePage={activePage} jump={jump} />
