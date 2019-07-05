@@ -99,8 +99,8 @@ const App = () => {
       ) : (
         <>
           <Flight flights={flights} activePage={activePage} />
-          <button onClick={handlePageChangeup}>+</button>
           <button onClick={handlePageChangedown}>-</button>
+          <button onClick={handlePageChangeup}>+</button>
         </>
       )}
     </>
