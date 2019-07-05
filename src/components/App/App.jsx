@@ -6,10 +6,11 @@ const App = () => {
   const [flights, setflights] = useState([]);
   const [from, setFrom] = useState("VAL");
   const [to, setTo] = useState("PRG");
+  const [loading, setLoading] = useState(false);
 
   const fromList = {
     Valencia: "VAL",
-    Barcelona: "BAR",
+    Barcelona: "BCN",
     Madrid: "MAD",
     Milano: "MIL",
     Athens: "ATH"
@@ -18,11 +19,12 @@ const App = () => {
   const toList = {
     Prague: "PRG",
     Berlin: "BER",
-    Warsaw: "WAW",
+    Warsaw: "WMI",
     Pardubice: "PED"
   };
 
   const getFlight = () => {
+    setLoading(true);
     fetch(
       `https://api.skypicker.com/flights?fly_from=${from}&fly_to=${to}&date_from=05/07/2019&date_to=06/07/2019`
     )
@@ -37,19 +39,16 @@ const App = () => {
           key: index
         }));
         setflights(detailsOfFlight);
-      });
+        setLoading(false);
+      })
+      .catch(console.log);
   };
 
   useEffect(() => {
     getFlight();
   }, []);
 
-  if (flights.length === 0) {
-    return "LOADING";
-  }
-
   const handleFrom = e => {
-    // setFrom(e.target.value);
     setFrom(fromList[e.target.value]);
   };
 
@@ -64,15 +63,13 @@ const App = () => {
           <option key={`fromOption-${index}`}>{item}</option>
         ))}
       </select>
-
       <select name="toList" onChange={handleTo}>
         {Object.keys(toList).map((item, index) => (
           <option key={`toOption-${index}`}>{item}</option>
         ))}
       </select>
-
-      <button onClick={getFlight}>SEARCH</button>
-      <Flight flights={flights} />
+      <button onClick={getFlight}>SEARCH</button> <br />
+      {loading ? "LOADING" : <Flight flights={flights} />}
     </>
   );
 };
