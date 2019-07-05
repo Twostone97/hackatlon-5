@@ -9,6 +9,8 @@ const App = () => {
   const [loading, setLoading] = useState(false);
   const [directFlight, setDirectFlight] = useState(0);
   const [activePage, setActivePage] = useState(0);
+  const [textInputFrom, setTextInputFrom] = useState("");
+  const [textInputTo, setTextInputTo] = useState("");
 
   const fromList = {
     Valencia: "VAL",
@@ -80,6 +82,31 @@ const App = () => {
       }
     });
   };
+  const handleTypingFrom = e => {
+    setTextInputFrom(e.target.value);
+    console.log(e.target.value);
+  };
+  const handleTypingTo = e => {
+    setTextInputTo(e.target.value);
+    console.log(e.target.value);
+  };
+  const getCityCode = async () => {
+    await fetch(
+      `https://api.skypicker.com/locations?term=${textInputFrom}&limit=1`
+    )
+      .then(resp => resp.json())
+      .then(cityCodeFrom => cityCodeFrom.locations[0].code)
+      .then(setFrom);
+
+    await fetch(
+      `https://api.skypicker.com/locations?term=${textInputTo}&limit=1`
+    )
+      .then(resp => resp.json())
+      .then(cityCodeTo => cityCodeTo.locations[0].code)
+      .then(setTo)
+
+      .then(getFlight());
+  };
   return (
     <>
       <select name="fromList" onChange={handleFrom}>
@@ -92,8 +119,10 @@ const App = () => {
           <option key={`toOption-${index}`}>{item}</option>
         ))}
       </select>
+      <input type="text" onChange={handleTypingFrom} />
+      <input type="text" onChange={handleTypingTo} />
       <input type="checkbox" onChange={handleDirect} />
-      <button onClick={getFlight}>SEARCH</button> <br />
+      <button onClick={getCityCode}>SEARCH</button> <br />
       {loading ? (
         "LOADING"
       ) : (
