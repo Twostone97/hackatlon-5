@@ -1,8 +1,8 @@
 import React from "react";
 
-const Flight = ({ flights }) => {
-  const result = flights.map(flight => {
-    return (
+const Flight = ({ flights }) => (
+  <div className="flight">
+    {flights.map(flight => (
       <>
         <div className="dTime">Departure: {flight.departureTime}</div>
         <div className="aTime">Arrival: {flight.arrivalTime}</div>
@@ -10,14 +10,8 @@ const Flight = ({ flights }) => {
         <div className="to">To: {flight.to}</div>
         <div className="price">Price: {flight.price}€</div>
       </>
-    );
-  });
-
-  return (
-    <>
-      <div className="flight">{result}</div>
-    </>
-  );
-};
+    ))}
+  </div>
+);
 
 export default Flight;
