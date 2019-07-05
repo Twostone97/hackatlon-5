@@ -10,6 +10,7 @@ const App = () => {
   const [activePage, setActivePage] = useState(0);
   const [textInputFrom, setTextInputFrom] = useState("");
   const [textInputTo, setTextInputTo] = useState("");
+  const [jump, setJump] = useState(5);
 
   const fromList = {
     Valencia: "VAL",
@@ -60,22 +61,26 @@ const App = () => {
   };
   const handlePageChangeup = () => {
     setActivePage(prevState => {
-      if (prevState + 5 > flights.length) {
+      if (prevState + jump > flights.length) {
         return prevState;
       } else {
-        return prevState + 5;
+        return prevState + jump;
       }
     });
   };
 
   const handlePageChangedown = () => {
     setActivePage(prevState => {
-      if (prevState < 4) {
-        return (prevState = 0);
+      if (prevState < jump - 1) {
+        return 0;
       } else {
-        return prevState - 5;
+        console.log("jump type", typeof jump);
+        return prevState - jump;
       }
     });
+  };
+  const handleJump = step => {
+    setJump(step);
   };
   const handleTypingFrom = e => {
     setTextInputFrom(e.target.value);
@@ -106,16 +111,6 @@ const App = () => {
 
   return (
     <>
-      {/* <select name="fromList" onChange={handleFrom}>
-        {Object.keys(fromList).map((item, index) => (
-          <option key={`fromOption-${index}`}>{item}</option>
-        ))}
-      </select>
-      <select name="toList" onChange={handleTo}>
-        {Object.keys(toList).map((item, index) => (
-          <option key={`toOption-${index}`}>{item}</option>
-        ))}
-      </select> */}
       <div className="inputs">
         <label htmlFor="text">From:</label>
         <input type="text" onChange={handleTypingFrom} />
@@ -128,10 +123,31 @@ const App = () => {
         "LOADING"
       ) : (
         <>
-          <Flight flights={flights} activePage={activePage} />
+          <Flight flights={flights} activePage={activePage} jump={jump} />
           <div className="pages">
             <button onClick={handlePageChangedown}>◄</button>
             <button onClick={handlePageChangeup}>►</button>
+            <button
+              onClick={() => {
+                handleJump(5);
+              }}
+            >
+              5
+            </button>
+            <button
+              onClick={() => {
+                handleJump(10);
+              }}
+            >
+              10
+            </button>
+            <button
+              onClick={() => {
+                handleJump(15);
+              }}
+            >
+              15
+            </button>
           </div>
         </>
       )}
